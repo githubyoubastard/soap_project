@@ -1,0 +1,87 @@
+@charset "UTF-8";
+.selling_upper{
+    padding: 20px 0;
+   border-bottom: 1px solid #ebebeb;
+   margin-left: 13px;
+   margin-right: 13px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.selling_upload{
+   text-align: center;
+   position: relative;   
+    border-bottom: 1px solid #ebebeb;
+}
+.selling_form{
+   padding-bottom:20px;
+   border-bottom: 1px solid #ebebeb;
+}
+.selling_upload img{
+   margin-top: 20px;
+   border: 1px solid #ebebeb;
+}
+.selling_box{
+   margin : 30px 0;
+   border: 1px solid #ebebeb;
+}
+
+.up_img_label {
+    background: url("https://ccimage.hellomarket.com/web/tag/ico_itemsubmit_mainimage.png");
+    width: 37px;
+    height: 46px;
+    position: absolute;
+    top: 20px;
+    margin-left: 25px;
+}
+
+#title_box{
+   padding: 10px 0;
+}
+
+.selling_upload > p{
+   visibility: hidden;
+}
+
+#contents_box{
+   padding: 10px 0;
+}
+
+#category_box{
+   padding: 10px 0;
+}
+
+#location_box{
+   padding: 10px 0;
+}
+
+.catInfo{
+    width: 100%;
+    padding: 5px 2px;
+}
+
+.notice_box{
+   padding-top: 20px;
+}
+.notice_box>p{
+   color: #999;
+}
+.selling_button{
+   padding: 20px 0;
+}
+.button_box>button{
+   width: 45%;
+    height: 100%;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    background-color: #ff9630;
+    border-radius: 3px;
+    color: #fff;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+.button_box>#cancel{
+   float: left;
+    background-color: #a1b4ba;
+}

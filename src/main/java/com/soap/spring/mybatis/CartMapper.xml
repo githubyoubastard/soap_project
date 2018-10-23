@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cart">
+
+	<sql id="cartColumn">
+		product_num AS num, user_id AS id, product_name AS name, 
+		product_price AS price, product_quantity AS quan,
+		product_content AS content, product_img AS img,
+		TO_CHAR(cart_regdate,'YYYY.MM.DD AM') AS regdate
+	</sql>
+
+	<insert id="insert" parameterType="CartDto">
+		INSERT INTO s_cart
+		(product_num,  user_id, product_name, product_price, 
+		product_content, product_img, product_quantity, cart_regdate)
+		 
+		VALUES(#{num}, #{id}, #{name}, #{price},
+			#{content}, #{img}, #{quan}, SYSDATE)
+	</insert>
+	
+	<select id="getList" parameterType="String" resultType="CartDto">
+		SELECT <include refid="cartColumn"/>
+		FROM s_cart
+		WHERE user_id=#{id}
+		ORDER BY cart_regdate DESC		
+	</select>
+		
+	<select id="getData" parameterType="CartDto" resultType="CartDto">
+		SELECT *
+		FROM s_cart
+		WHERE product_num=#{num}	
+	</select>
+	
+	<update id="update" parameterType="CartDto">
+		UPDATE s_cart
+		SET product_quantity=#{quan}
+		WHERE product_num=#{num}
+	</update>
+	
+	<select id="checkDouble" parameterType="CartDto" resultType="CartDto">
+		SELECT product_num AS num
+		FROM s_cart
+		WHERE product_num=#{num} AND user_id=#{id}
+	</select>
+	
+	
+
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+	<sql id="user_columns">
+		user_id as id, user_name as name, user_pwd as pwd, user_email as email, user_phone as phone, user_isAdmin as isAdmin, TO_CHAR(user_regdate,'YYYY"년" MM"월" DD"일"') as regdate
+	</sql>
+	<sql id="orderList_columns">
+		order_info.order_num AS order_num, order_info.user_id AS user_id,
+		order_info.product_name AS product_name, order_info.product_quantity AS product_quantity,
+		order_info.product_price AS product_price, order_info.order_regdate AS order_regdate,
+		p.product_saveFileName AS product_saveFileName
+	</sql>
+	<select id="getList" resultType="UsersDto">
+		SELECT <include refid="user_columns"/>
+		FROM s_users
+		WHERE user_isAdmin=1
+	</select>
+	<insert id="insert" parameterType="UsersDto">
+		INSERT INTO s_users
+		(user_id, user_pwd, user_name, user_email, user_phone, user_isAdmin, user_regdate)
+		VALUES(#{id},#{pwd},#{name},#{email},#{phone},1,SYSDATE)
+	</insert>	
+	<select id="getOrderList" parameterType="String" resultType="OrderDto">
+		SELECT o.order_num, o.user_id, o.order_regdate, o.order_totalPrice, d.product_num, d.product_name, d.product_quantity
+		FROM s_order o, s_order_detail d
+		WHERE o.order_num=d.order_num 
+	</select>
+	<select id="getOrderInfo" parameterType="String" resultType="OrderDto">
+		SELECT order_num, user_id, order_totalPrice, order_regdate, order_name AS contact_name, 
+					order_address AS contact_addr, order_phone AS contact_phone, order_request AS contact_addr
+		FROM s_order
+		WHERE order_num=#{order_num}
+	</select>
+	<select id="getTotalOrderNum" resultType="int">
+		SELECT NVL(MAX(ROWNUM),0) 
+		FROM s_order
+	</select>
+	<select id="getData" parameterType="String" resultType="OrderDto">
+		SELECT o.order_num, o.user_id, o.order_regdate, o.order_totalPrice, o.order_request AS order_requirement, d.product_num, d.product_name, d.product_price, d.product_quantity
+		FROM (SELECT *
+					FROM s_order
+					WHERE order_num=#{order_num}) o, s_order_detail d
+		WHERE d.order_num=#{order_num}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+@charset "utf-8";
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,button{margin:0;padding:0}
+fieldset,img,label,input,button{border:0 none; margin:0;}
+dl,ul,ol,menu,li,a{list-style:none;text-decoration:none;color:#000;}
+dl,ul,ol,menu,li,a:hover{text-decoration:none;}
+blockquote, q{quotes: none}
+blockquote:before, blockquote:after,q:before, q:after{content:'';content:none}
+input,select,textarea,button{border-radius:0;vertical-align:middle}
+label{font-size:11px;font-weight: normal;}
+
+
+.form-control{
+	padding: 10px 3px 8px 9px;
+	line-height: 20px;
+	box-sizing: border-box;
+	font-size: 14px;
+	border: 1px solid #ddd;
+	padding: 10px 3px 8px 9px;
+}
+.form-control:hover{
+	border: 1px solid #129bdb;
+}
+
+input[type="radio"], input[type="checkbox"]{margin:0;width: 20px; height: 20px;}
+input[type="radio"], input[type="checkbox"]:hover{cursor: pointer}

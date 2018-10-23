@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+	<sql id="getSql_users">
+		product_num AS num, 
+		product_name AS name, 
+		product_price AS price,
+		product_content AS content, 
+		product_description AS description, 
+		product_saveFileName AS saveFileName,
+		TO_CHAR(product_regdate,'yyyy-mm-dd') AS regdate
+	</sql>
+	<sql id="getSql_admin">
+		product_num AS num, 
+		product_name AS name, 
+		product_price AS price,
+		product_stock AS stock, 
+		product_content AS content, 
+		product_description AS description, 
+		product_saveFileName AS saveFileName, 
+		TO_CHAR(product_regdate,'yyyy-mm-dd') AS regdate
+	</sql>
+	<insert id="insert" parameterType="ProductDto">
+		INSERT INTO s_product
+		(product_num, product_name, product_price, product_stock, product_content, product_saveFileName, product_regdate)
+		VALUES(product_seq.nextval, #{name}, #{price}, #{stock}, #{content}, #{saveFileName}, SYSDATE)
+	</insert>
+	<update id="update" parameterType="ProductDto">
+		UPDATE s_product
+		SET product_name=#{name}, product_price=#{price}, product_stock=#{stock},  product_content=#{content}, product_saveFileName=#{saveFileName}
+		WHERE product_num=#{num}
+	</update>
+	<select id="detail" parameterType="int" resultType="ProductDto">
+		SELECT <include refid="getSql_admin"/>
+		FROM s_product
+		WHERE product_num=#{num}
+	</select>
+	<select id="getList" resultType="ProductDto">
+		SELECT <include refid="getSql_users"/>
+		FROM s_product
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

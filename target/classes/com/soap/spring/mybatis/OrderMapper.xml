@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order">
+	<select id="getProductInfo" parameterType="int" resultType="OrderDto">
+		SELECT *
+		FROM s_product
+		WHERE product_num =#{num}
+	</select>
+	<select id="getUserInfo" parameterType="String" resultType="OrderDto">
+		SELECT user_name AS contact_name, user_phone AS contact_phone, user_addr AS contact_addr
+		FROM s_users
+		WHERE user_id=#{id}
+	</select>
+	<insert id="orderInsert" parameterType="OrderDto">
+		INSERT INTO s_order
+		(order_num, user_id, order_totalPrice, order_regdate, order_name, order_address, order_phone, order_request)
+		VALUES(#{order_num}, #{user_id}, #{product_price}*#{product_quantity}, SYSDATE, #{contact_name}, #{contact_addr},#{contact_phone},#{order_requirement})
+	</insert>
+	<insert id="orderDetailInsert" parameterType="OrderDto">
+		INSERT INTO s_order_detail
+		(order_num, product_num, product_name, product_price, product_quantity)
+		VALUES(#{order_num}, #{product_num}, #{product_name}, #{product_price}, #{product_quantity})
+	</insert>
+	<select id="getOrderNum" resultType="String">
+		SELECT CONCAT(TO_CHAR(sysdate,'YYYYMMDDHHSSMI'),s_order_seq.NEXTVAL) AS order_num
+		FROM dual
+	</select>
+</mapper>

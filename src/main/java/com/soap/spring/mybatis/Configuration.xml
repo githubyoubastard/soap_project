@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.soap.spring.users.usersDto.UsersDto" alias="UsersDto"/>
+		<typeAlias type="com.soap.spring.product.dto.ProductDto" alias="ProductDto"/>
+		<typeAlias type="com.soap.spring.order.dto.OrderDto" alias="OrderDto"/>
+		<typeAlias type="com.soap.spring.qna.dto.QnADto" alias="QnADto"/>
+		<typeAlias type="com.soap.spring.news.dto.NewsDto" alias="NewsDto"/>
+		<typeAlias type="com.soap.spring.cart.dto.CartDto" alias="CartDto"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="com/soap/spring/mybatis/UsersMapper.xml"/>
+		<mapper resource="com/soap/spring/mybatis/AdminMapper.xml"/>
+		<mapper resource="com/soap/spring/mybatis/ProductMapper.xml"/>
+		<mapper resource="com/soap/spring/mybatis/OrderMapper.xml"/>
+		<mapper resource="com/soap/spring/mybatis/NewsMapper.xml"/>
+		<mapper resource="com/soap/spring/mybatis/QnAMapper.xml"/>
+		<mapper resource="com/soap/spring/mybatis/CartMapper.xml"/>
+	</mappers>
+</configuration>
+
+
+
+
+
+
+

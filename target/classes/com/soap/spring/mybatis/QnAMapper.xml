@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QnA">
+	<sql id="qnaColumn">
+		num, writer, title, content,target_id, qna_group, passwd,
+		TO_CHAR(regdate,'YYYY.MM.DD AM HH:MI') AS regdate
+	</sql>
+
+
+	<insert id="insert" parameterType="QnADto">
+		INSERT INTO s_comm_qna
+		(num, writer, title, content,target_id, qna_group, passwd, regdate)
+		VALUES(#{num}, #{writer}, #{title}, #{content}, #{target_id}, #{qna_group}, #{passwd}, SYSDATE)
+	</insert>
+	
+	<select id="getSequence" resultType="int">
+		SELECT s_comm_qna_seq.NEXTVAL
+		FROM DUAL
+	</select>
+	
+	<select id="getCount" parameterType="QnADto" resultType="int">
+		SELECT NVL(MAX(ROWNUM), 0)
+		FROM s_comm_qna
+	</select>
+	
+	<select id="getList" parameterType="QnADto"
+		resultType="QnADto">
+		SELECT *
+		FROM (SELECT result1.*, ROWNUM rnum
+			  FROM ( SELECT <include refid="qnaColumn"/>
+					FROM s_comm_qna
+					ORDER BY qna_group DESC,num ASC ) result1
+			  )
+		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	
+	
+	<select id="getData" parameterType="QnADto" 
+		resultType="QnADto">
+		SELECT result1.*
+		FROM ( SELECT <include refid="qnaColumn"/>,
+				LAG(num, 1, 0) OVER(ORDER BY num DESC) prevNum,
+				LEAD(num, 1, 0) OVER(ORDER BY num DESC) nextNum
+			 FROM s_comm_qna
+			 ORDER BY num DESC ) result1
+		WHERE num=#{num}			
+	</select>
+</mapper>

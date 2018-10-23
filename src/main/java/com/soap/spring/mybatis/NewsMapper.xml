@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="news">
+
+   <sql id="newsColumn">
+      num,writer,title,content,viewCount,
+      TO_CHAR(regdate,'YYYY.MM.DD AM') AS regdate
+   </sql>
+
+   <insert id="insert" parameterType="newsDto">
+      INSERT INTO s_news
+      (num, writer, title, content, viewCount, regdate)
+      VALUES(s_news_seq.NEXTVAL, #{writer}, #{title},
+         #{content}, #{viewCount}, SYSDATE)
+   </insert>
+   
+   <select id="getList" parameterType="newsDto" resultType="newsDto">
+      SELECT *
+      FROM (SELECT result1.*, ROWNUM rnum
+           FROM ( SELECT <include refid="newsColumn"/>
+               FROM s_news
+               <where>
+                  <if test="writer != null">
+                     OR writer LIKE '%'||#{writer}||'%'
+                  </if>
+                  <if test="title != null">
+                     OR title LIKE '%'||#{title}||'%'
+                  </if>
+                  <if test="content !=null">
+                     OR content LIKE '%'||#{content}||'%'
+                  </if>
+               </where>
+               ORDER BY num DESC ) result1
+           )
+      WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+   </select>
+      
+   <select id="getData" parameterType="newsDto" resultType="newsDto">
+
+      SELECT *
+      FROM s_news
+      WHERE num=#{num}
+
+   </select>
+   
+   <update id="update" parameterType="newsDto">
+      UPDATE s_news
+      SET title=#{title},content=#{content}
+      WHERE num=#{num}
+   </update>
+   
+   <delete id="delete" parameterType="int">
+      DELETE FROM s_news
+      WHERE num=#{num}
+   </delete>
+   
+   <update id="addViewCount" parameterType="int">
+      UPDATE s_news
+      SET viewCount=viewCount+1
+      WHERE num=#{num}
+   </update>   
+   
+   <select id="getCount" parameterType="NewsDto" resultType="int">
+      SELECT NVL(MAX(ROWNUM), 0)
+      FROM s_news
+
+   </select>
+</mapper>
